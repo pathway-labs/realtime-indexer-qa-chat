@@ -1,3 +1,4 @@
 pathway
 streamlit
 llama-index
+python-dotenv
