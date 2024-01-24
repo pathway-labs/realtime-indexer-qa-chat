@@ -1,0 +1,3 @@
+pathway
+streamlit
+llama-index
