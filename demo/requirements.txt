@@ -1,4 +1,3 @@
--i https://packages.pathway.com/966431ef6ba
 pathway
 streamlit
 llama-index
