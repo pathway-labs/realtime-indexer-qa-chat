@@ -16,8 +16,10 @@ with st.sidebar:
         "Check out Pathway hosted index on [Pathway Indexer](https://pathway-indexer.staging.deploys.pathway.com/)"
     )
 
-    st.markdown("""Add your documents 📄📩 to [Drive Folder](https://drive.google.com/drive/u/0/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs) 
-                or [Sharepoint](https://navalgo.sharepoint.com/:f:/s/ConnectorSandbox/EgBe-VQr9h1IuR7VBeXsRfIBuOYhv-8z02_6zf4uTH8WbQ?e=YmlA05)""")
+    st.markdown(
+        """Add your documents 📄📩 to [Drive Folder](https://drive.google.com/drive/u/0/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs) 
+                or [Sharepoint](https://navalgo.sharepoint.com/:f:/s/ConnectorSandbox/EgBe-VQr9h1IuR7VBeXsRfIBuOYhv-8z02_6zf4uTH8WbQ?e=YmlA05)"""
+    )
 
 # Load environment variables
 load_dotenv()
