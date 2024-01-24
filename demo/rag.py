@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
-from llama_index.chat_engine.condense_question import CondenseQuestionChatEngine
+from llama_index.chat_engine.condense_plus_context import \
+    CondensePlusContextChatEngine
 from llama_index.query_engine import RetrieverQueryEngine
 from llama_index.retrievers import PathwayRetriever
 
@@ -14,7 +15,9 @@ query_engine = RetrieverQueryEngine.from_args(
     retriever,
 )
 
-chat_engine = CondenseQuestionChatEngine.from_defaults(
-    query_engine=query_engine,
+
+chat_engine = CondensePlusContextChatEngine.from_defaults(
+    retriever=retriever,
+    system_prompt="IF QUESTION IS NOT RELATED TO CONTEXT DOCUMENTS, SAY IT'S NOT POSSIBLE TO ANSWER.",
     verbose=True,
 )
