@@ -11,11 +11,11 @@ with st.sidebar:
     )
 
     st.markdown(
-        """Ready to build your own? 
+        """**Ready to build your own?** 
 
 Our [docs](https://pathway.com/developers/showcases/llamaindex-pathway/) walk through creating custom pipelines with LlamaIndex.
 
-Want a hosted version?
+**Want a hosted version?**
 
 Check out our [hosted document pipelines](https://pathway-indexer.staging.deploys.pathway.com/)."""
     )
@@ -42,20 +42,24 @@ image_width = 300
 image_height = 200
 
 htm = """
-<div style="display: flex; ">
-  <a href="https://drive.google.com/drive/u/0/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs">
-    <figure style="text-align: center; margin-right: 10px;">
-      <img src="./app/static/Google_Drive_logo.png" width="50" alt="Google Drive Logo">
-      <figcaption>Upload to Google Drive</figcaption>
-    </figure>
-  </a>
-
-  <a href="https://navalgo.sharepoint.com/:f:/s/ConnectorSandbox/EgBe-VQr9h1IuR7VBeXsRfIBuOYhv-8z02_6zf4uTH8WbQ?e=YmlA05">
-    <figure style="text-align: center;">
-      <img src="./app/static/sharepoint.png" width="50" alt="Google Drive Logo">
-      <figcaption>Upload to Sharepoint</figcaption>
-    </figure>
-  </a>
+<div style="display: flex; align-items: center; vertical-align: middle">
+    <a href="https://drive.google.com/drive/u/0/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs" style="text-decoration:none;">
+      <figure style="display: flex; vertical-align: middle; margin-right: 20px; align-items: center;">
+        <img src="./app/static/Google_Drive_logo.png" width="50" alt="Google Drive Logo">
+        <figcaption>Upload</figcaption>
+      </figure>
+    </a>
+    <a href="https://navalgo.sharepoint.com/:f:/s/ConnectorSandbox/EgBe-VQr9h1IuR7VBeXsRfIBuOYhv-8z02_6zf4uTH8WbQ?e=YmlA05" style="text-decoration:none;">
+      <figure style="display: flex; vertical-align: middle; align-items: center; margin-right: 20px;">
+        <img src="./app/static/sharepoint.png" width="50" alt="Google Drive Logo">
+        <figcaption>Upload</figcaption>
+      </figure>
+    </a>
+    <a href="https://pathway.com/?modal=getstarted" style="text-decoration:none;">
+      <figure style="display: flex; vertical-align: middle; align-items: center; margin-right: 20px;">
+        <button>Connect to your folders with Pathway</button>
+      </figure>
+    </a>
 </div>
 """
 
