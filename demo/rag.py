@@ -17,10 +17,11 @@ query_engine = RetrieverQueryEngine.from_args(
 )
 
 pathway_explaination = "Pathway is a high-throughput, low-latency data processing framework that handles live data & streaming for you."
+DEFAULT_MESSAGES = [ChatMessage(role=MessageRole.USER, content='What is Pathway?'), ChatMessage(role=MessageRole.ASSISTANT, content=pathway_explaination)]
 
 chat_engine = CondensePlusContextChatEngine.from_defaults(
     retriever=retriever,
     system_prompt="IF QUESTION IS NOT RELATED TO CONTEXT DOCUMENTS, SAY IT'S NOT POSSIBLE TO ANSWER.",
     verbose=True,
-    chat_history=[ChatMessage(role=MessageRole.USER, content='What is Pathway?'), ChatMessage(role=MessageRole.ASSISTANT, content=pathway_explaination)]
+    chat_history=DEFAULT_MESSAGES
 )

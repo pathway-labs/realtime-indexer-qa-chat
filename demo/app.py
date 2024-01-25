@@ -64,7 +64,15 @@ st.markdown(htm, unsafe_allow_html=True)
 
 if "messages" not in st.session_state.keys():
     from rag import chat_engine
+    from llama_index.llms.types import ChatMessage, MessageRole
+
+    pathway_explaination = "Pathway is a high-throughput, low-latency data processing framework that handles live data & streaming for you."
+    DEFAULT_MESSAGES = [ChatMessage(role=MessageRole.USER, content='What is Pathway?'), ChatMessage(role=MessageRole.ASSISTANT, content=pathway_explaination)]
     chat_engine.chat_history.clear()
+
+    for msg in DEFAULT_MESSAGES:
+        chat_engine.chat_history.append(msg)
+
     st.session_state.messages = [{'role': msg.role, 'content': msg.content} for msg in chat_engine.chat_history]
     st.session_state.chat_engine = chat_engine
 
