@@ -1,5 +1,6 @@
-import streamlit as st
 import datetime
+
+import streamlit as st
 from dotenv import load_dotenv
 
 htm = """
@@ -23,7 +24,7 @@ htm = """
     </figure>
 </a>
 """
-    
+
 
 with st.sidebar:
     st.markdown("**Add Your Files**")
@@ -31,9 +32,7 @@ with st.sidebar:
 
     st.markdown("\n\n\n\n\n\n\n")
     st.markdown("\n\n\n\n\n\n\n")
-    st.markdown(
-        "[View code on GitHub.](https://github.com/pathwaycom/pathway)"
-    )
+    st.markdown("[View code on GitHub.](https://github.com/pathwaycom/pathway)")
 
     st.markdown(
         """Pathway pipelines ingest documents from [Google Drive](https://drive.google.com/drive/u/0/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs) and [Sharepoint](https://navalgo.sharepoint.com/:f:/s/ConnectorSandbox/EgBe-VQr9h1IuR7VBeXsRfIBuOYhv-8z02_6zf4uTH8WbQ?e=YmlA05). It automatically manages and syncs indexes enabling RAG applications."""
@@ -72,22 +71,29 @@ image_height = 200
 
 
 if "messages" not in st.session_state.keys():
-    from rag import chat_engine, vector_client
     from llama_index.llms.types import ChatMessage, MessageRole
+    from rag import chat_engine, vector_client
 
     pathway_explaination = "Pathway is a high-throughput, low-latency data processing framework that handles live data & streaming for you."
-    DEFAULT_MESSAGES = [ChatMessage(role=MessageRole.USER, content='What is Pathway?'), ChatMessage(role=MessageRole.ASSISTANT, content=pathway_explaination)]
+    DEFAULT_MESSAGES = [
+        ChatMessage(role=MessageRole.USER, content="What is Pathway?"),
+        ChatMessage(role=MessageRole.ASSISTANT, content=pathway_explaination),
+    ]
     chat_engine.chat_history.clear()
 
     for msg in DEFAULT_MESSAGES:
         chat_engine.chat_history.append(msg)
 
-    st.session_state.messages = [{'role': msg.role, 'content': msg.content} for msg in chat_engine.chat_history]
+    st.session_state.messages = [
+        {"role": msg.role, "content": msg.content} for msg in chat_engine.chat_history
+    ]
     st.session_state.chat_engine = chat_engine
     st.session_state.vector_client = vector_client
 
     with st.sidebar:
-        dt = st.session_state.vector_client.get_vectorstore_statistics()['last_modified']
+        dt = st.session_state.vector_client.get_vectorstore_statistics()[
+            "last_modified"
+        ]
         st.markdown(f"Index last updated at {datetime.datetime.fromtimestamp(dt)} UTC")
 
 
@@ -108,5 +114,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
             st.session_state.messages.append(message)
 
     with st.sidebar:
-        dt = st.session_state.vector_client.get_vectorstore_statistics()['last_modified']
+        dt = st.session_state.vector_client.get_vectorstore_statistics()[
+            "last_modified"
+        ]
         st.markdown(f"Index last updated at {datetime.datetime.fromtimestamp(dt)} UTC")
