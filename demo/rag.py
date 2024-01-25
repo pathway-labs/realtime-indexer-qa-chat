@@ -5,8 +5,12 @@ from llama_index.query_engine import RetrieverQueryEngine
 from llama_index.retrievers import PathwayRetriever
 from llama_index.llms.types import ChatMessage, MessageRole
 
+from pathway.xpacks.llm.vector_store import VectorStoreClient
+
 PATHWAY_HOST = "api-pathway-indexer.staging.deploys.pathway.com"
 PATHWAY_PORT = 80
+
+vector_client = VectorStoreClient(PATHWAY_HOST, PATHWAY_PORT)
 
 load_dotenv()
 

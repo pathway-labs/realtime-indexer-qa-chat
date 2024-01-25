@@ -1,7 +1,36 @@
 import streamlit as st
+import datetime
 from dotenv import load_dotenv
 
+htm = """
+<div style="display: flex; align-items: center; vertical-align: middle">
+    <a href="https://drive.google.com/drive/u/0/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs" style="text-decoration:none;">
+      <figure style="display: flex; vertical-align: middle; margin-right: 20px; align-items: center;">
+        <img src="./app/static/Google_Drive_logo.png" width="30" alt="Google Drive Logo">
+        <figcaption>Upload</figcaption>
+      </figure>
+    </a>
+    <a href="https://navalgo.sharepoint.com/:f:/s/ConnectorSandbox/EgBe-VQr9h1IuR7VBeXsRfIBuOYhv-8z02_6zf4uTH8WbQ?e=YmlA05" style="text-decoration:none;">
+      <figure style="display: flex; vertical-align: middle; align-items: center; margin-right: 20px;">
+        <img src="./app/static/sharepoint.png" width="30" alt="Google Drive Logo">
+        <figcaption>Upload</figcaption>
+      </figure>
+    </a>
+</div>
+<a href="https://pathway.com/?modal=getstarted" style="text-decoration:none;">
+    <figure style="display: flex; vertical-align: middle; align-items: center; margin-right: 20px;">
+    <button>Connect to your folders with Pathway</button>
+    </figure>
+</a>
+"""
+    
+
 with st.sidebar:
+    st.markdown("**Add Your Files**")
+    st.markdown(htm, unsafe_allow_html=True)
+
+    st.markdown("\n\n\n\n\n\n\n")
+    st.markdown("\n\n\n\n\n\n\n")
     st.markdown(
         "[View code on GitHub.](https://github.com/pathwaycom/pathway)"
     )
@@ -41,33 +70,9 @@ st.markdown(htt, unsafe_allow_html=True)
 image_width = 300
 image_height = 200
 
-htm = """
-<div style="display: flex; align-items: center; vertical-align: middle">
-    <a href="https://drive.google.com/drive/u/0/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs" style="text-decoration:none;">
-      <figure style="display: flex; vertical-align: middle; margin-right: 20px; align-items: center;">
-        <img src="./app/static/Google_Drive_logo.png" width="50" alt="Google Drive Logo">
-        <figcaption>Upload</figcaption>
-      </figure>
-    </a>
-    <a href="https://navalgo.sharepoint.com/:f:/s/ConnectorSandbox/EgBe-VQr9h1IuR7VBeXsRfIBuOYhv-8z02_6zf4uTH8WbQ?e=YmlA05" style="text-decoration:none;">
-      <figure style="display: flex; vertical-align: middle; align-items: center; margin-right: 20px;">
-        <img src="./app/static/sharepoint.png" width="50" alt="Google Drive Logo">
-        <figcaption>Upload</figcaption>
-      </figure>
-    </a>
-    <a href="https://pathway.com/?modal=getstarted" style="text-decoration:none;">
-      <figure style="display: flex; vertical-align: middle; align-items: center; margin-right: 20px;">
-        <button>Connect to your folders with Pathway</button>
-      </figure>
-    </a>
-</div>
-"""
-
-st.markdown(htm, unsafe_allow_html=True)
-
 
 if "messages" not in st.session_state.keys():
-    from rag import chat_engine
+    from rag import chat_engine, vector_client
     from llama_index.llms.types import ChatMessage, MessageRole
 
     pathway_explaination = "Pathway is a high-throughput, low-latency data processing framework that handles live data & streaming for you."
@@ -79,6 +84,11 @@ if "messages" not in st.session_state.keys():
 
     st.session_state.messages = [{'role': msg.role, 'content': msg.content} for msg in chat_engine.chat_history]
     st.session_state.chat_engine = chat_engine
+    st.session_state.vector_client = vector_client
+
+    with st.sidebar:
+        dt = st.session_state.vector_client.get_vectorstore_statistics()['last_modified']
+        st.markdown(f"Index last updated at {datetime.datetime.fromtimestamp(dt)} UTC")
 
 
 if prompt := st.chat_input("Your question"):
@@ -96,3 +106,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
             st.write(response.response)
             message = {"role": "assistant", "content": response.response}
             st.session_state.messages.append(message)
+
+    with st.sidebar:
+        dt = st.session_state.vector_client.get_vectorstore_statistics()['last_modified']
+        st.markdown(f"Index last updated at {datetime.datetime.fromtimestamp(dt)} UTC")
