@@ -66,6 +66,7 @@ if "messages" not in st.session_state.keys():
     from rag import chat_engine
 
     st.session_state.messages = [{'role': msg.role, 'content': msg.content} for msg in chat_engine.chat_history]
+    st.session_state.chat_engine = chat_engine
 
 
 if prompt := st.chat_input("Your question"):
