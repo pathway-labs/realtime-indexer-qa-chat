@@ -1,4 +1,6 @@
 import datetime
+import sys
+import time
 
 import streamlit as st
 from dotenv import load_dotenv
@@ -70,6 +72,25 @@ image_width = 300
 image_height = 200
 
 
+def status_string() -> str:
+    try:
+        dt = st.session_state.vector_client.get_vectorstore_statistics()[
+            "last_modified"
+        ]
+    except Exception as e:
+        print(f"Failed to get status string: {e}", file=sys.stderr)
+        return ""
+
+    # If only static document collection is available, format a different str
+    if time.time() - dt > 3600:
+        return "No documents have been added by users yet"
+    else:
+        formatted_time = datetime.datetime.fromtimestamp(dt)
+        return (
+            f"Last document indexed at {formatted_time} UTC"
+        )
+
+
 if "messages" not in st.session_state.keys():
     from llama_index.llms.types import ChatMessage, MessageRole
     from rag import chat_engine, vector_client
@@ -91,10 +112,7 @@ if "messages" not in st.session_state.keys():
     st.session_state.vector_client = vector_client
 
     with st.sidebar:
-        dt = st.session_state.vector_client.get_vectorstore_statistics()[
-            "last_modified"
-        ]
-        st.markdown(f"Index last updated at {datetime.datetime.fromtimestamp(dt)} UTC")
+        st.markdown(status_string())
 
 
 if prompt := st.chat_input("Your question"):
@@ -114,7 +132,4 @@ if st.session_state.messages[-1]["role"] != "assistant":
             st.session_state.messages.append(message)
 
     with st.sidebar:
-        dt = st.session_state.vector_client.get_vectorstore_statistics()[
-            "last_modified"
-        ]
-        st.markdown(f"Index last updated at {datetime.datetime.fromtimestamp(dt)} UTC")
+        st.markdown(status_string())
