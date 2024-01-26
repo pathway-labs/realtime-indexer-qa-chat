@@ -34,7 +34,7 @@ with st.sidebar:
 
     st.markdown("\n\n\n\n\n\n\n")
     st.markdown("\n\n\n\n\n\n\n")
-    st.markdown("[View code on GitHub.](https://github.com/pathwaycom/pathway)")
+    st.markdown("[View code on GitHub.](https://github.com/pathway-labs/chat-realtime-sharepoint-gdrive)")
 
     st.markdown(
         """Pathway pipelines ingest documents from [Google Drive](https://drive.google.com/drive/u/0/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs) and [Sharepoint](https://navalgo.sharepoint.com/:f:/s/ConnectorSandbox/EgBe-VQr9h1IuR7VBeXsRfIBuOYhv-8z02_6zf4uTH8WbQ?e=YmlA05). It automatically manages and syncs indexes enabling RAG applications."""
@@ -47,7 +47,7 @@ Our [docs](https://pathway.com/developers/showcases/llamaindex-pathway/) walk th
 
 **Want a hosted version?**
 
-Check out our [hosted document pipelines](https://pathway-indexer.staging.deploys.pathway.com/)."""
+Check out our [hosted document pipelines](https://cloud.pathway.com/docindex)."""
     )
 
 
