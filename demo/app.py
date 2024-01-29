@@ -20,6 +20,8 @@ htm = """
       </figure>
     </a>
 </div>
+<div style="font-size: 10px">* These are public folders. Please do not upload confidential files.</div>
+<div><br></div>
 <a href="https://pathway.com/?modal=getstarted" style="text-decoration:none;">
     <figure style="display: flex; vertical-align: middle; align-items: center; margin-right: 20px;">
     <button>Connect to your folders with Pathway</button>
