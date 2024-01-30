@@ -1,4 +1,4 @@
-pathway==0.7.9
+pathway>=0.7.10
 streamlit
 llama-index
 python-dotenv
