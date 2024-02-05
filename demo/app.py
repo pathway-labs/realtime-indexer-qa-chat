@@ -6,7 +6,7 @@ import time
 import pandas as pd
 import streamlit as st
 from dotenv import load_dotenv
-from endpoint_utils import call_endpoints
+from endpoint_utils import get_inputs
 
 htm = """
 <div style="display: flex; align-items: center; vertical-align: middle">
@@ -100,7 +100,7 @@ if "messages" not in st.session_state.keys():
     st.session_state.vector_client = vector_client
 
 
-results = asyncio.run(call_endpoints())
+results = get_inputs()
 
 last_modified_time, last_indexed_files = results
 
