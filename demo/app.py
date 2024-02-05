@@ -112,6 +112,9 @@ def status_string() -> str:
             f"Last document indexed at {formatted_time} UTC{last_indexed_info}"
         )
 
+with st.sidebar:
+    if st.button("Refresh Index"):
+        st.markdown(status_string())
 
 if "messages" not in st.session_state.keys():
     from llama_index.llms.types import ChatMessage, MessageRole
