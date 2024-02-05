@@ -1,9 +1,9 @@
+import asyncio
 import datetime
 import sys
-import pandas as pd
-import asyncio
 import time
 
+import pandas as pd
 import streamlit as st
 from dotenv import load_dotenv
 from endpoint_utils import call_endpoints
@@ -39,7 +39,9 @@ with st.sidebar:
 
     st.markdown("\n\n\n\n\n\n\n")
     st.markdown("\n\n\n\n\n\n\n")
-    st.markdown("[View code on GitHub.](https://github.com/pathway-labs/chat-realtime-sharepoint-gdrive)")
+    st.markdown(
+        "[View code on GitHub.](https://github.com/pathway-labs/chat-realtime-sharepoint-gdrive)"
+    )
 
     st.markdown(
         """Pathway pipelines ingest documents from [Google Drive](https://drive.google.com/drive/u/0/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs) and [Sharepoint](https://navalgo.sharepoint.com/:f:/s/ConnectorSandbox/EgBe-VQr9h1IuR7VBeXsRfIBuOYhv-8z02_6zf4uTH8WbQ?e=YmlA05). It automatically manages and syncs indexes enabling RAG applications."""
@@ -71,11 +73,11 @@ htt = """
 </p>
 """
 st.markdown(htt, unsafe_allow_html=True)
-    
+
 
 image_width = 300
 image_height = 200
-    
+
 
 if "messages" not in st.session_state.keys():
     from llama_index.llms.types import ChatMessage, MessageRole
@@ -98,10 +100,8 @@ if "messages" not in st.session_state.keys():
     st.session_state.vector_client = vector_client
 
 
-
-
 results = asyncio.run(call_endpoints())
-    
+
 last_modified_time, last_indexed_files = results
 
 
@@ -110,10 +110,10 @@ df = pd.DataFrame(last_indexed_files, columns=[last_modified_time])
 df.set_index(df.columns[0])
 st.dataframe(df, hide_index=True, height=150, use_container_width=True)
 
-cs = st.columns([1, 1, 1, 1], gap='large')
+cs = st.columns([1, 1, 1, 1], gap="large")
 
 with cs[-1]:
-    st.button('⟳ Refresh', use_container_width=True)
+    st.button("⟳ Refresh", use_container_width=True)
 
 
 if prompt := st.chat_input("Your question"):
