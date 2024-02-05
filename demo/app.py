@@ -1,9 +1,12 @@
 import datetime
 import sys
+import pandas as pd
+import asyncio
 import time
 
 import streamlit as st
 from dotenv import load_dotenv
+from endpoint_utils import call_endpoints
 
 htm = """
 <div style="display: flex; align-items: center; vertical-align: middle">
@@ -22,7 +25,7 @@ htm = """
 </div>
 <div style="font-size: 10px">* These are public folders. Please do not upload confidential files.</div>
 <div><br></div>
-<a href="https://pathway.com/?modal=getstarted" style="text-decoration:none;">
+<a href="https://cloud.pathway.com/?modal=getstarted" style="text-decoration:none;">
     <figure style="display: flex; vertical-align: middle; align-items: center; margin-right: 20px;">
     <button>Connect to your folders with Pathway</button>
     </figure>
@@ -70,51 +73,50 @@ htt = """
 st.markdown(htt, unsafe_allow_html=True)
 
 
+
+
+# def status_string() -> str:
+#     try:
+#         dt = st.session_state.vector_client.get_vectorstore_statistics()[
+#             "last_modified"
+#         ]
+#     except Exception as e:
+#         print(f"Failed to get status string: {e}", file=sys.stderr)
+#         return ""
+
+#     last_indexed_info = ""
+#     try:
+#         last_indexed_files = []
+#         docs_list = st.session_state.vector_client.get_input_files()
+#         docs_list.sort(key=lambda x: x["modified_at"], reverse=True)
+#         for added_file in docs_list[:3]:
+#             full_path = added_file.get("path", added_file.get("name"))
+#             if full_path is None:
+#                 continue
+#             name = full_path.split("/")[-1]
+#             last_indexed_files.append(f"- {name}")
+#         if last_indexed_files:
+#             last_indexed_as_str_list = '\n'.join(last_indexed_files)
+#             last_indexed_info = (
+#                 f"\n\n**Available Files**\n"
+#                 f"{last_indexed_as_str_list}"
+#             )
+#     except Exception as e:
+#         print(f"Failed to get last indexed file: {e}", file=sys.stderr)
+
+#     # If only static document collection is available, format a different str
+#     if time.time() - dt > 3600:
+#         return f"No documents have been added by users yet{last_indexed_info}"
+#     else:
+#         formatted_time = datetime.datetime.fromtimestamp(dt)
+#         return (
+#             f"Last document indexed at {formatted_time} UTC{last_indexed_info}"
+#         )
+    
+
 image_width = 300
 image_height = 200
-
-
-def status_string() -> str:
-    try:
-        dt = st.session_state.vector_client.get_vectorstore_statistics()[
-            "last_modified"
-        ]
-    except Exception as e:
-        print(f"Failed to get status string: {e}", file=sys.stderr)
-        return ""
-
-    last_indexed_info = ""
-    try:
-        last_indexed_files = []
-        docs_list = st.session_state.vector_client.get_input_files()
-        docs_list.sort(key=lambda x: x["modified_at"], reverse=True)
-        for added_file in docs_list[:3]:
-            full_path = added_file.get("path", added_file.get("name"))
-            if full_path is None:
-                continue
-            name = full_path.split("/")[-1]
-            last_indexed_files.append(f"- {name}")
-        if last_indexed_files:
-            last_indexed_as_str_list = '\n'.join(last_indexed_files)
-            last_indexed_info = (
-                f"\n\n**Last indexed file names**\n"
-                f"{last_indexed_as_str_list}"
-            )
-    except Exception as e:
-        print(f"Failed to get last indexed file: {e}", file=sys.stderr)
-
-    # If only static document collection is available, format a different str
-    if time.time() - dt > 3600:
-        return f"No documents have been added by users yet{last_indexed_info}"
-    else:
-        formatted_time = datetime.datetime.fromtimestamp(dt)
-        return (
-            f"Last document indexed at {formatted_time} UTC{last_indexed_info}"
-        )
-
-with st.sidebar:
-    if st.button("Refresh Index"):
-        st.markdown(status_string())
+    
 
 if "messages" not in st.session_state.keys():
     from llama_index.llms.types import ChatMessage, MessageRole
@@ -136,8 +138,23 @@ if "messages" not in st.session_state.keys():
     st.session_state.chat_engine = chat_engine
     st.session_state.vector_client = vector_client
 
-    with st.sidebar:
-        st.markdown(status_string())
+
+
+
+results = asyncio.run(call_endpoints())
+    
+last_modified_time, last_indexed_files = results
+
+
+df = pd.DataFrame(last_indexed_files, columns=[last_modified_time])
+
+df.set_index(df.columns[0])
+st.dataframe(df, hide_index=True, height=150, use_container_width=True)
+
+cs = st.columns([1, 1, 1, 1], gap='large')
+
+with cs[-1]:
+    st.button('⟳ Refresh', use_container_width=True)
 
 
 if prompt := st.chat_input("Your question"):
@@ -155,6 +172,3 @@ if st.session_state.messages[-1]["role"] != "assistant":
             st.write(response.response)
             message = {"role": "assistant", "content": response.response}
             st.session_state.messages.append(message)
-
-    with st.sidebar:
-        st.markdown(status_string())
