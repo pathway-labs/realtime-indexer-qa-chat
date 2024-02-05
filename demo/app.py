@@ -128,6 +128,16 @@ if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
             response = st.session_state.chat_engine.chat(prompt)
-            st.write(response.response)
-            message = {"role": "assistant", "content": response.response}
+
+            sources = [
+                f"`{i.metadata['path'].split('/')[-1]}`" for i in response.source_nodes
+            ]
+            sources_text = ", ".join(sources)
+            response_text = (
+                response.response + f"\n\nAnswers are based on: {sources_text}"
+            )
+
+            st.write(response_text)
+
+            message = {"role": "assistant", "content": response_text}
             st.session_state.messages.append(message)
