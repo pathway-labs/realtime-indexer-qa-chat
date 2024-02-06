@@ -128,18 +128,26 @@ if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
             response = st.session_state.chat_engine.chat(prompt)
+            sources = []
 
             try:
-                sources = [
-                    f"`{i.metadata['path'].split('/')[-1]}`" for i in response.source_nodes
-                ]
-                sources_text = ", ".join(sources)
-                response_text = (
+                for source in response.source_nodes:
+                    full_path = source.metadata.get("path", source.metadata.get("name"))
+                    if full_path is None:
+                        continue
+                    if '/' in full_path:
+                        name = f"`{full_path.split('/')[-1]}`"
+                    else:
+                        name = f"`{full_path}`"
+                    sources.append(name)
+            except AttributeError:
+                print(f"No source (`source_nodes`) was found in response: {response}")
+
+            sources_text = ", ".join(sources)
+
+            response_text = (
                     response.response + f"\n\nAnswers are based on: {sources_text}"
                 )
-            except KeyError as e:
-                # raise KeyError("'path' is not found in metadata of source nodes") from e
-                print("'path' is not found in metadata of source nodes")
 
             st.write(response_text)
 
