@@ -27,7 +27,7 @@ DEFAULT_MESSAGES = [
 
 chat_engine = CondensePlusContextChatEngine.from_defaults(
     retriever=retriever,
-    system_prompt="IF QUESTION IS NOT RELATED TO CONTEXT DOCUMENTS, SAY IT'S NOT POSSIBLE TO ANSWER.",
+    system_prompt="IF QUESTION IS NOT RELATED TO CONTEXT DOCUMENTS, SAY IT'S NOT POSSIBLE TO ANSWER USING PHRASE `The looked-up documents do not provde information about...`",
     verbose=True,
     chat_history=DEFAULT_MESSAGES,
 )

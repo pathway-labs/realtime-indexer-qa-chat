@@ -146,7 +146,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
             sources_text = ", ".join(sources)
 
             response_text = (
-                    response.response + f"\n\nAnswers are based on: {sources_text}"
+                    response.response + f"\n\nDocuments looked up to obtain this answer: {sources_text}"
                 )
 
             st.write(response_text)
