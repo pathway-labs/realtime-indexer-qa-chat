@@ -139,7 +139,8 @@ if st.session_state.messages[-1]["role"] != "assistant":
                         name = f"`{full_path.split('/')[-1]}`"
                     else:
                         name = f"`{full_path}`"
-                    sources.append(name)
+                    if name not in sources:
+                        sources.append(name)
             except AttributeError:
                 print(f"No source (`source_nodes`) was found in response: {response}")
 
