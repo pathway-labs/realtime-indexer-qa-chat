@@ -1,8 +1,3 @@
-import asyncio
-import datetime
-import sys
-import time
-
 import pandas as pd
 import streamlit as st
 from dotenv import load_dotenv
@@ -44,7 +39,7 @@ with st.sidebar:
     )
 
     st.markdown(
-        """Pathway pipelines ingest documents from [Google Drive](https://drive.google.com/drive/u/0/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs) and [Sharepoint](https://navalgo.sharepoint.com/:f:/s/ConnectorSandbox/EgBe-VQr9h1IuR7VBeXsRfIBuOYhv-8z02_6zf4uTH8WbQ?e=YmlA05). It automatically manages and syncs indexes enabling RAG applications."""
+        """Pathway pipelines ingest documents from [Google Drive](https://drive.google.com/drive/u/0/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs) and [Sharepoint](https://navalgo.sharepoint.com/:f:/s/ConnectorSandbox/EgBe-VQr9h1IuR7VBeXsRfIBuOYhv-8z02_6zf4uTH8WbQ?e=YmlA05) simultaneously. It automatically manages and syncs indexes enabling RAG applications."""
     )
 
     st.markdown(
@@ -63,7 +58,9 @@ load_dotenv()
 
 
 # Streamlit UI elements
-st.title("Chat with documents realtime ⚡ in Google Drive & Sharepoint")
+st.write(
+    "## Chat with all your enterprise documents realtime ⚡ in Google Drive & Sharepoint"
+)
 
 
 htt = """
@@ -135,7 +132,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
                     full_path = source.metadata.get("path", source.metadata.get("name"))
                     if full_path is None:
                         continue
-                    if '/' in full_path:
+                    if "/" in full_path:
                         name = f"`{full_path.split('/')[-1]}`"
                     else:
                         name = f"`{full_path}`"
@@ -147,8 +144,9 @@ if st.session_state.messages[-1]["role"] != "assistant":
             sources_text = ", ".join(sources)
 
             response_text = (
-                    response.response + f"\n\nDocuments looked up to obtain this answer: {sources_text}"
-                )
+                response.response
+                + f"\n\nDocuments looked up to obtain this answer: {sources_text}"
+            )
 
             st.write(response_text)
 
