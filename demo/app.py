@@ -27,6 +27,7 @@ htm = """
 </a>
 """
 
+st.set_page_config(page_title='Realtime Document AI pipelines', page_icon='./app/static/favicon.ico')
 
 with st.sidebar:
     st.markdown("**Add Your Files**")
