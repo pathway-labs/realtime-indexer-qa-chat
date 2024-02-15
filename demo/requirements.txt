@@ -1,4 +1,4 @@
 pathway>=0.7.10
-streamlit=1.31.0
+streamlit==1.31.0
 llama-index==0.9.38
 python-dotenv==1.0.1
