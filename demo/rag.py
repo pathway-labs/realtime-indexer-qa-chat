@@ -1,9 +1,10 @@
 from dotenv import load_dotenv
-from llama_index.chat_engine.condense_plus_context import \
-    CondensePlusContextChatEngine
+from llama_index.chat_engine.condense_plus_context import CondensePlusContextChatEngine
+from llama_index.llms.openai import OpenAI
 from llama_index.llms.types import ChatMessage, MessageRole
 from llama_index.query_engine import RetrieverQueryEngine
 from llama_index.retrievers import PathwayRetriever
+
 from pathway.xpacks.llm.vector_store import VectorStoreClient
 
 PATHWAY_HOST = "api-pathway-indexer.staging.deploys.pathway.com"
@@ -14,6 +15,8 @@ vector_client = VectorStoreClient(PATHWAY_HOST, PATHWAY_PORT)
 load_dotenv()
 
 retriever = PathwayRetriever(host=PATHWAY_HOST, port=PATHWAY_PORT)
+
+llm = OpenAI(model="gpt-3.5-turbo")
 
 query_engine = RetrieverQueryEngine.from_args(
     retriever,
@@ -27,7 +30,9 @@ DEFAULT_MESSAGES = [
 
 chat_engine = CondensePlusContextChatEngine.from_defaults(
     retriever=retriever,
-    system_prompt="IF QUESTION IS NOT RELATED TO CONTEXT DOCUMENTS, SAY IT'S NOT POSSIBLE TO ANSWER USING PHRASE `The looked-up documents do not provde information about...`",
+    system_prompt="""You are RAG AI that answers users questions based on provided sources.
+    IF QUESTION IS NOT RELATED TO ANY OF THE CONTEXT DOCUMENTS, SAY IT'S NOT POSSIBLE TO ANSWER USING PHRASE `The looked-up documents do not provde information about...`""",
     verbose=True,
     chat_history=DEFAULT_MESSAGES,
+    llm=llm,
 )
