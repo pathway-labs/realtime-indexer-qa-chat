@@ -27,7 +27,9 @@ htm = """
 </a>
 """
 
-st.set_page_config(page_title='Realtime Document AI pipelines', page_icon='./app/static/favicon.ico')
+st.set_page_config(
+    page_title="Realtime Document AI pipelines", page_icon="./app/static/favicon.ico"
+)
 
 with st.sidebar:
     st.markdown("**Add Your Files**")
@@ -44,7 +46,7 @@ with st.sidebar:
     )
 
     st.markdown(
-        """**Ready to build your own?** 
+        """**Ready to build your own?**
 
 Our [docs](https://pathway.com/developers/showcases/llamaindex-pathway/) walk through creating custom pipelines with LlamaIndex.
 
@@ -103,7 +105,7 @@ results = get_inputs()
 last_modified_time, last_indexed_files = results
 
 
-df = pd.DataFrame(last_indexed_files, columns=[last_modified_time])
+df = pd.DataFrame(last_indexed_files, columns=[last_modified_time, "status"])
 
 df.set_index(df.columns[0])
 st.dataframe(df, hide_index=True, height=150, use_container_width=True)

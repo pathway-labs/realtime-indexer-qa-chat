@@ -10,18 +10,19 @@ def get_inputs() -> tuple[str, list[str]]:
     formatted_time = ""
     try:
         docs_list = st.session_state.vector_client.get_input_files()
-        last_modified = max([x["modified_at"] for x in docs_list])
+        last_modified = max([x["seen_at"] for x in docs_list])
 
         docs_list.sort(
-            key=lambda x: (x["modified_at"], x.get("path", x.get("name"))), reverse=True
+            key=lambda x: (x["seen_at"], x.get("path", x.get("name"))), reverse=True
         )
 
         for added_file in docs_list:
             full_path = added_file.get("path", added_file.get("name"))
+            status = added_file.get("status")
             if full_path is None:
                 continue
             name = full_path.split("/")[-1]
-            last_indexed_files.append(name)
+            last_indexed_files.append([name, status])
 
             formatted_time = datetime.datetime.fromtimestamp(last_modified)
     except Exception as e:
