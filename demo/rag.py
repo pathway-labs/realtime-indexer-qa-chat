@@ -1,3 +1,4 @@
+import os
 from dotenv import load_dotenv
 from llama_index.chat_engine.condense_plus_context import CondensePlusContextChatEngine
 from llama_index.llms.openai import OpenAI
@@ -7,12 +8,14 @@ from llama_index.retrievers import PathwayRetriever
 
 from pathway.xpacks.llm.vector_store import VectorStoreClient
 
-PATHWAY_HOST = "api-pathway-indexer.staging.deploys.pathway.com"
+load_dotenv()
+
+PATHWAY_HOST = os.environ.get("PATHWAY_HOST", "demo-document-indexing.pathway.stream")
+
 PATHWAY_PORT = 80
 
 vector_client = VectorStoreClient(PATHWAY_HOST, PATHWAY_PORT)
 
-load_dotenv()
 
 retriever = PathwayRetriever(host=PATHWAY_HOST, port=PATHWAY_PORT)
 

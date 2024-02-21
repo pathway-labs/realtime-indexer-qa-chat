@@ -1,11 +1,18 @@
+import os
+
 import pandas as pd
 import streamlit as st
 from dotenv import load_dotenv
 from endpoint_utils import get_inputs
 
-htm = """
+
+DRIVE_URL = os.environ.get(
+    "GDRIVE_FOLDER_URL",
+    "https://drive.google.com/drive/u/0/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs",
+)
+htm = f"""
 <div style="display: flex; align-items: center; vertical-align: middle">
-    <a href="https://drive.google.com/drive/u/0/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs" style="text-decoration:none;">
+    <a href="{DRIVE_URL}" style="text-decoration:none;">
       <figure style="display: flex; vertical-align: middle; margin-right: 20px; align-items: center;">
         <img src="./app/static/Google_Drive_logo.png" width="30" alt="Google Drive Logo">
         <figcaption>Upload</figcaption>
