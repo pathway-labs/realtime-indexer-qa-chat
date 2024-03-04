@@ -1,14 +1,19 @@
 import os
+
 from dotenv import load_dotenv
 from llama_index.chat_engine.condense_plus_context import CondensePlusContextChatEngine
 from llama_index.llms.openai import OpenAI
 from llama_index.llms.types import ChatMessage, MessageRole
 from llama_index.query_engine import RetrieverQueryEngine
 from llama_index.retrievers import PathwayRetriever
+from traceloop.sdk import Traceloop
 
 from pathway.xpacks.llm.vector_store import VectorStoreClient
 
 load_dotenv()
+
+
+Traceloop.init(app_name=os.environ.get("APP_NAME", "PW - LlamaIndex (Streamlit)"))
 
 PATHWAY_HOST = os.environ.get("PATHWAY_HOST", "demo-document-indexing.pathway.stream")
 
