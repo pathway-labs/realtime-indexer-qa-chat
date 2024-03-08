@@ -15,11 +15,9 @@ load_dotenv()
 
 Traceloop.init(app_name=os.environ.get("APP_NAME", "PW - LlamaIndex (Streamlit)"))
 
-DEFAULT_PATHWAY_HOST = "demo-document-indexing.pathway.stream"
+PATHWAY_HOST = os.environ.get("PATHWAY_HOST", "demo-document-indexing.pathway.stream")
 
-PATHWAY_HOST = os.environ.get("PATHWAY_HOST", DEFAULT_PATHWAY_HOST)
-
-PATHWAY_PORT = int(os.environ.get("PATHWAY_PORT", "80"))
+PATHWAY_PORT = 80
 
 vector_client = VectorStoreClient(PATHWAY_HOST, PATHWAY_PORT)
 
