@@ -1,10 +1,21 @@
+import json
+import logging
 import os
 
 import pandas as pd
 import streamlit as st
 from dotenv import load_dotenv
 from endpoint_utils import get_inputs
+from log_utils import init_pw_log_config
+from streamlit.web.server.websocket_headers import _get_websocket_headers
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(name)s %(levelname)s %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+
+init_pw_log_config()
 
 DRIVE_URL = os.environ.get(
     "GDRIVE_FOLDER_URL",
@@ -87,8 +98,29 @@ image_height = 200
 
 
 if "messages" not in st.session_state.keys():
+    import uuid
+
     from llama_index.llms.types import ChatMessage, MessageRole
     from rag import chat_engine, vector_client
+    from traceloop.sdk import Traceloop
+
+    if "session_id" not in st.session_state.keys():
+        session_id = "uuid-" + str(uuid.uuid4())
+
+        logging.info(json.dumps({"_type": "set_session_id", "session_id": session_id}))
+        Traceloop.set_association_properties({"session_id": session_id})
+        st.session_state["session_id"] = session_id
+
+    headers = _get_websocket_headers()
+    logging.info(
+        json.dumps(
+            {
+                "_type": "set_headers",
+                "headers": headers,
+                "session_id": st.session_state.get("session_id", "NULL_SESS"),
+            }
+        )
+    )
 
     pathway_explaination = "Pathway is a high-throughput, low-latency data processing framework that handles live data & streaming for you."
     DEFAULT_MESSAGES = [
@@ -125,6 +157,15 @@ with cs[-1]:
 
 if prompt := st.chat_input("Your question"):
     st.session_state.messages.append({"role": "user", "content": prompt})
+    logging.info(
+        json.dumps(
+            {
+                "_type": "user_prompt",
+                "prompt": prompt,
+                "session_id": st.session_state.get("session_id", "NULL_SESS"),
+            }
+        )
+    )
 
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
@@ -135,6 +176,15 @@ if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
             response = st.session_state.chat_engine.chat(prompt)
+            logging.info(
+                json.dumps(
+                    {
+                        "_type": "llm_response",
+                        "response": str(response),
+                        "session_id": st.session_state.get("session_id", "NULL_SESS"),
+                    }
+                )
+            )
             sources = []
 
             try:
@@ -149,7 +199,17 @@ if st.session_state.messages[-1]["role"] != "assistant":
                     if name not in sources:
                         sources.append(name)
             except AttributeError:
-                print(f"No source (`source_nodes`) was found in response: {response}")
+                logging.error(
+                    json.dumps(
+                        {
+                            "_type": "error",
+                            "error": f"No source (`source_nodes`) was found in response: {str(response)}",
+                            "session_id": st.session_state.get(
+                                "session_id", "NULL_SESS"
+                            ),
+                        }
+                    )
+                )
 
             sources_text = ", ".join(sources)
 
