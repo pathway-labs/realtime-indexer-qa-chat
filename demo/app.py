@@ -176,15 +176,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
             response = st.session_state.chat_engine.chat(prompt)
-            logging.info(
-                json.dumps(
-                    {
-                        "_type": "llm_response",
-                        "response": str(response),
-                        "session_id": st.session_state.get("session_id", "NULL_SESS"),
-                    }
-                )
-            )
+
             sources = []
 
             try:
@@ -212,6 +204,17 @@ if st.session_state.messages[-1]["role"] != "assistant":
                 )
 
             sources_text = ", ".join(sources)
+
+            logging.info(
+                json.dumps(
+                    {
+                        "_type": "llm_response",
+                        "response": str(response),
+                        "session_id": st.session_state.get("session_id", "NULL_SESS"),
+                        "sources": sources,
+                    }
+                )
+            )
 
             response_text = (
                 response.response
