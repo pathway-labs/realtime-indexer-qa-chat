@@ -2,10 +2,11 @@ FROM python:3.11
 
 WORKDIR /app
 
-RUN git clone https://github.com/pathway-labs/realtime-indexer-qa-chat.git
-WORKDIR /app/realtime-indexer-qa-chat
+COPY demo/requirements.txt demo/
 
 RUN pip install --pre -U --no-cache-dir -r demo/requirements.txt
+
+COPY demo demo
 
 EXPOSE 8501
 
