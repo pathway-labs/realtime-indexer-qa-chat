@@ -37,10 +37,10 @@ Want to jump right in? Check out the app and the [code](https://github.com/pathw
 
 ## Prerequisites
 - An OpenAI API Key (Only needed for OpenAI models)
-- Running Pathway Vector Store process (a hosted version is provided free for the demo, instructoins to self-host one are provided below)
+- Running Pathway Vector Store process (a hosted version is provided for the demo, instructoins to self-host one are provided below)
 
-## Adding data to source
-First, add example documents to the vector store by uploading files to Google Drive that is registered to Pathway Vector Store as a source. Pathway can listen to many sources simultaneously, such as local files, S3 folders, cloud storage and any data stream for data changes. For this demo, a Google Drive folder is provided for you to upload files. There is Pathway Github repository's readme that is provided in the folder. In this demo, we will ask our questions about Pathway our assistant and it will respond based on the available files in the Drive folder.
+## Adding new documents
+First, add example documents to the vector store by uploading files to Google Drive that is registered to Pathway Vector Store as a source. Pathway can listen to many sources simultaneously, such as local files, S3 folders, cloud storage and any data stream for data changes. For this demo, a public Google Drive folder is provided for you to upload file. It is pre-populated with Pathway Github repository's readme. In this demo, we will ask questions about Pathway to our assistant and it will respond based on the available files in the Drive folder.
 
 See [pathway-io](https://pathway.com/developers/api-docs/pathway-io) for more information on available connectors and how to implement custom connectors.
 
@@ -102,7 +102,7 @@ if "messages" not in st.session_state.keys():
 
 When the app is first run, `messages` will not be in the `st.session_state` and it will be initialized.
 
-Then,  print the messages both from the user and the assistant. Streamlit works in a way that resembles running a script, the whole file will be running each time there is a change in components, and the session state is the only component that has states. Making it powerful for saving and keeping elements that do not need to be re-initialized. That is why, all messages are printed iteratively.
+Then, print messages both from the user and the assistant. Streamlit works in a way that resembles running a script, the whole file will be running each time there is a change in components, and the session state is the only component that has states. Making it powerful for saving and keeping elements that do not need to be re-initialized. That is why, all messages are printed iteratively.
 
 ```python
 if prompt := st.chat_input("Your question"):
@@ -138,15 +138,15 @@ The demo is hosted on Streamlit Community Cloud [here](https://chat-realtime-sha
 Clone this repository to your machine.
 Create a `.env` file under the root folder, this will store your OpenAI API key, demo uses the OpenAI GPT model to answer questions.
 
-You need access to a running  Pathway Vector Store pipeline. For this demo, a free instance is provided that reads documents in [Google Drive](https://drive.google.com/drive/u/2/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs) and [Sharepoint](https://navalgo.sharepoint.com/:f:/s/ConnectorSandbox/EgBe-VQr9h1IuR7VBeXsRfIBuOYhv-8z02_6zf4uTH8WbQ?e=YmlA05). However, it is easy to run our own locally. Please see the [vector store guide](https://pathway.com/developers/showcases/vectorstore_pipeline) and also [Pathway Deployment](https://pathway.com/developers/user-guide/deployment/docker-deployment). 
+You need access to a running Pathway Vector Store pipeline. For this demo, a public instance is provided that reads documents in [Google Drive](https://drive.google.com/drive/u/2/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs) and [Sharepoint](https://navalgo.sharepoint.com/:f:/s/ConnectorSandbox/EgBe-VQr9h1IuR7VBeXsRfIBuOYhv-8z02_6zf4uTH8WbQ?e=YmlA05). However, it is easy to run our own locally. Please see the [vector store guide](https://pathway.com/developers/showcases/vectorstore_pipeline) and also [Pathway Deployment](https://pathway.com/developers/user-guide/deployment/docker-deployment). 
 
 Open a terminal and run `streamlit run ui.py`. This will prompt you a URL, simply click and open the demo.
 
 Congrats! Now you are ready to chat with your documents with updated knowledge provided by Pathway.
 
-### Runnig with Docker
+### Running with Docker
 
-We provide a Dockerfile to run the applicartion. From the root folder of the repository run 
+We provide a Dockerfile to run the application. From the root folder of the repository run 
 
 ```
 docker build -t realtime_chat .
@@ -157,7 +157,7 @@ We recommend running in docker when working on a Windows machine.
 
 ### Running a local Pathway Vector Store
 
-The code for the Pathway Vector Store pipeline, along with a Dockerfile is provided [at Pathway LLM examples repository](https://github.com/pathwaycom/llm-app/tree/main/examples/pipelines/demo-document-indexing). Please follow instructions to run only the vector store pipeline, or to run the pipeline and the stramlit ui as a joint deployment using `docker compose`.
+The code for the Pathway Vector Store pipeline, along with a Dockerfile is provided [at Pathway LLM examples repository](https://github.com/pathwaycom/llm-app/tree/main/examples/pipelines/demo-document-indexing). Please follow instructions to run only the vector store pipeline, or to run the pipeline and the Streamlit UI as a joint deployment using `docker compose`.
 
 Note that, if you want to create RAG application on your Google Drive, you need to set up a Google Service account, [refer to the instructions here](https://github.com/pathwaycom/llm-app/blob/main/examples/pipelines/demo-question-answering/README.md#create-a-new-project-in-the-google-api-console).
 If you are not planning to use local files in your app, you can skip the `binding local volume` part explained in the llm-app instructions provided above. 
