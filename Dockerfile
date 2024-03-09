@@ -6,7 +6,7 @@ COPY demo/requirements.txt demo/
 
 RUN pip install --pre -U --no-cache-dir -r demo/requirements.txt
 
-COPY demo demo
+COPY . .
 
 EXPOSE 8501
 
