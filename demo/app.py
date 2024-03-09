@@ -1,13 +1,17 @@
 import json
 import logging
 import os
+import uuid
 
 import pandas as pd
 import streamlit as st
 from dotenv import load_dotenv
 from endpoint_utils import get_inputs
+from llama_index.llms.types import ChatMessage, MessageRole
 from log_utils import init_pw_log_config
+from rag import DEFAULT_PATHWAY_HOST, PATHWAY_HOST, chat_engine, vector_client
 from streamlit.web.server.websocket_headers import _get_websocket_headers
+from traceloop.sdk import Traceloop
 
 logging.basicConfig(
     level=logging.INFO,
@@ -50,18 +54,24 @@ st.set_page_config(
 )
 
 with st.sidebar:
-    st.markdown("**Add Your Files**")
-    st.markdown(htm, unsafe_allow_html=True)
+    if PATHWAY_HOST == DEFAULT_PATHWAY_HOST:
+        st.markdown("**Add Your Files**")
 
-    st.markdown("\n\n\n\n\n\n\n")
-    st.markdown("\n\n\n\n\n\n\n")
-    st.markdown(
-        "[View code on GitHub.](https://github.com/pathway-labs/chat-realtime-sharepoint-gdrive)"
-    )
+        st.markdown(htm, unsafe_allow_html=True)
 
-    st.markdown(
-        """Pathway pipelines ingest documents from [Google Drive](https://drive.google.com/drive/u/0/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs) and [Sharepoint](https://navalgo.sharepoint.com/:f:/s/ConnectorSandbox/EgBe-VQr9h1IuR7VBeXsRfIBuOYhv-8z02_6zf4uTH8WbQ?e=YmlA05) simultaneously. It automatically manages and syncs indexes enabling RAG applications."""
-    )
+        st.markdown("\n\n\n\n\n\n\n")
+        st.markdown("\n\n\n\n\n\n\n")
+        st.markdown(
+            "[View code on GitHub.](https://github.com/pathway-labs/chat-realtime-sharepoint-gdrive)"
+        )
+        st.markdown(
+            """Pathway pipelines ingest documents from [Google Drive](https://drive.google.com/drive/u/0/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs) and [Sharepoint](https://navalgo.sharepoint.com/:f:/s/ConnectorSandbox/EgBe-VQr9h1IuR7VBeXsRfIBuOYhv-8z02_6zf4uTH8WbQ?e=YmlA05) simultaneously. It automatically manages and syncs indexes enabling RAG applications."""
+        )
+    else:
+        st.markdown(f"**Connected to:** {PATHWAY_HOST}")
+        st.markdown(
+            "[View code on GitHub.](https://github.com/pathway-labs/chat-realtime-sharepoint-gdrive)"
+        )
 
     st.markdown(
         """**Ready to build your own?**
@@ -98,12 +108,6 @@ image_height = 200
 
 
 if "messages" not in st.session_state.keys():
-    import uuid
-
-    from llama_index.llms.types import ChatMessage, MessageRole
-    from rag import chat_engine, vector_client
-    from traceloop.sdk import Traceloop
-
     if "session_id" not in st.session_state.keys():
         session_id = "uuid-" + str(uuid.uuid4())
 
@@ -145,6 +149,8 @@ last_modified_time, last_indexed_files = results
 
 
 df = pd.DataFrame(last_indexed_files, columns=[last_modified_time, "status"])
+if df.status.isna().any():
+    del df["status"]
 
 df.set_index(df.columns[0])
 st.dataframe(df, hide_index=True, height=150, use_container_width=True)
