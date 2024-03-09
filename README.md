@@ -131,6 +131,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
 
 ### On Streamlit Community Cloud
 
+The demo is hosted on Streamlit Community Cloud [here](https://chat-realtime-sharepoint-gdrive.streamlit.app/). This version of the app uses Pathway's [hosted document pipelines](https://cloud.pathway.com/docindex).
 
 ### On your local machine
 
@@ -142,7 +143,7 @@ You need access to a running  Pathway Vector Store pipeline. For this demo, a fr
 Open a terminal and run `streamlit run ui.py`. This will prompt you a URL, simply click and open the demo.
 
 Congrats! Now you are ready to chat with your documents with updated knowledge provided by Pathway.
-### With Docker
+### Runnig with Docker
 
 We provide a Dockerfile to run the applicartion. From the root folder of the repository run 
 
