@@ -139,10 +139,21 @@ if st.session_state.messages[-1]["role"] != "assistant":
 
 ### On your local machine
 
-Clone [this repository](change this to tutorial repo or folder) to your machine.
+Clone this repository to your machine.
 Create a `.env` file under the root folder, this will store your OpenAI API key, demo uses the OpenAI GPT model to answer questions.
 
-You need a Pathway instance for vector search, for local deployment see the [vector store guide](https://pathway.com/developers/showcases/vectorstore_pipeline) and also [Pathway Deployment](https://pathway.com/developers/user-guide/deployment/docker-deployment). For this demo, a free instance is provided that reads documents in [Google Drive](https://drive.google.com/drive/u/2/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs) and [Sharepoint](https://navalgo.sharepoint.com/:f:/s/ConnectorSandbox/EgBe-VQr9h1IuR7VBeXsRfIBuOYhv-8z02_6zf4uTH8WbQ?e=YmlA05).
+You need a Pathway instance for vector search, for local deployment see the [vector store guide](https://pathway.com/developers/showcases/vectorstore_pipeline) and also [Pathway Deployment](https://pathway.com/developers/user-guide/deployment/docker-deployment). 
+
+### With Docker
+
+If you are on Windows or, you want to run the vector store in a `Docker` image, refer to [Document Indexing with Docker](https://github.com/pathwaycom/llm-app/tree/main/examples/pipelines/demo-document-indexing#running-with-docker), Docker file is provided [`here`](https://github.com/pathwaycom/llm-app/blob/main/examples/pipelines/demo-document-indexing/Dockerfile). 
+
+Note that, if you want to create RAG application on your Google Drive, you need to set up a Google Service account, [refer to the instructions here](https://github.com/pathwaycom/llm-app/blob/main/examples/pipelines/demo-question-answering/README.md#create-a-new-project-in-the-google-api-console).
+If you are not planning to use local files in your app, you can skip the `binding local volume` part explained in the llm-app instructions provided above. 
+
+### Pathway hosted
+
+For this demo, a free instance is provided that reads documents in [Google Drive](https://drive.google.com/drive/u/2/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs) and [Sharepoint](https://navalgo.sharepoint.com/:f:/s/ConnectorSandbox/EgBe-VQr9h1IuR7VBeXsRfIBuOYhv-8z02_6zf4uTH8WbQ?e=YmlA05).
 
 Open a terminal and run `streamlit run ui.py`. This will prompt you a URL, simply click and open the demo.
 
