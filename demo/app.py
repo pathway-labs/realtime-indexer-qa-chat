@@ -10,7 +10,7 @@ from endpoint_utils import get_inputs
 from log_utils import init_pw_log_config
 from rag import ImportVariables
 from streamlit.web.server.websocket_headers import _get_websocket_headers
-from traceloop.sdk import Traceloop
+# from traceloop.sdk import Traceloop
 
 logging.basicConfig(
     level=logging.INFO,
@@ -57,7 +57,7 @@ if "messages" not in st.session_state.keys():
         session_id = "uuid-" + str(uuid.uuid4())
 
         logging.info(json.dumps({"_type": "set_session_id", "session_id": session_id}))
-        Traceloop.set_association_properties({"session_id": session_id})
+        # Traceloop.set_association_properties({"session_id": session_id})
         st.session_state["session_id"] = session_id
 
     headers = _get_websocket_headers()
