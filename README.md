@@ -56,7 +56,7 @@ from llama_index.chat_engine.condense_question import CondenseQuestionChatEngine
 Then, initialize the retriever with the chosen Pathway Vector Store instance (for an easy start we point to the managed instance) and create the query engine:
 
 ```python
-PATHWAY_HOST = "https://api-pathway-indexer.staging.deploys.pathway.com"
+PATHWAY_HOST = "https://demo-document-indexing.pathway.stream"
 PATHWAY_PORT = ''
 
 retriever = PathwayRetriever(host=PATHWAY_HOST, port=PATHWAY_PORT)
