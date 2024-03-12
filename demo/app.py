@@ -96,7 +96,8 @@ if "messages" not in st.session_state.keys():
 DEFAULT_PATHWAY_HOST = "demo-document-indexing.pathway.stream"
 
 with st.sidebar:
-    if st.session_state.get("PATHWAY_HOST", DEFAULT_PATHWAY_HOST) == DEFAULT_PATHWAY_HOST:
+    current_port = st.session_state.get("PATHWAY_HOST", DEFAULT_PATHWAY_HOST)
+    if current_port == DEFAULT_PATHWAY_HOST:
         st.markdown("**Add Your Files**")
 
         st.markdown(htm, unsafe_allow_html=True)
@@ -110,7 +111,7 @@ with st.sidebar:
             """Pathway pipelines ingest documents from [Google Drive](https://drive.google.com/drive/u/0/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs) and [Sharepoint](https://navalgo.sharepoint.com/:f:/s/ConnectorSandbox/EgBe-VQr9h1IuR7VBeXsRfIBuOYhv-8z02_6zf4uTH8WbQ?e=YmlA05) simultaneously. It automatically manages and syncs indexes enabling RAG applications."""
         )
     else:
-        st.markdown(f"**Connected to:** {st.session_state.get("PATHWAY_HOST", DEFAULT_PATHWAY_HOST)}")
+        st.markdown(f"**Connected to:** {current_port}")
         st.markdown(
             "[View code on GitHub.](https://github.com/pathway-labs/chat-realtime-sharepoint-gdrive)"
         )
