@@ -7,9 +7,8 @@ import pandas as pd
 import streamlit as st
 from dotenv import load_dotenv
 from endpoint_utils import get_inputs
-from llama_index.llms.types import ChatMessage, MessageRole
 from log_utils import init_pw_log_config
-from rag import DEFAULT_PATHWAY_HOST, PATHWAY_HOST, chat_engine, vector_client
+from rag import ImportVariables
 from streamlit.web.server.websocket_headers import _get_websocket_headers
 from traceloop.sdk import Traceloop
 
@@ -53,8 +52,50 @@ st.set_page_config(
     page_title="Realtime Document AI pipelines", page_icon="./app/static/favicon.ico"
 )
 
+if "messages" not in st.session_state.keys():
+    if "session_id" not in st.session_state.keys():
+        session_id = "uuid-" + str(uuid.uuid4())
+
+        logging.info(json.dumps({"_type": "set_session_id", "session_id": session_id}))
+        Traceloop.set_association_properties({"session_id": session_id})
+        st.session_state["session_id"] = session_id
+
+    headers = _get_websocket_headers()
+    logging.info(
+        json.dumps(
+            {
+                "_type": "set_headers",
+                "headers": headers,
+                "session_id": st.session_state.get("session_id", "NULL_SESS"),
+            }
+        )
+    )
+
+    # pathway_explaination = "Pathway is a high-throughput, low-latency data processing framework that handles live data & streaming for you."
+    # DEFAULT_MESSAGES = [
+    #     ChatMessage(role=MessageRole.USER, content="What is Pathway?"),
+    #     ChatMessage(role=MessageRole.ASSISTANT, content=pathway_explaination),
+    # ]
+    # chat_engine.chat_history.clear()
+
+    # for msg in DEFAULT_MESSAGES:
+    #     chat_engine.chat_history.append(msg)
+    import_vars = ImportVariables()
+    chat_engine = import_vars.chat_engine
+    vector_client = import_vars.vector_client
+
+    st.session_state.messages = [
+        {"role": msg.role, "content": msg.content} for msg in chat_engine.chat_history
+    ]
+    st.session_state.chat_engine = chat_engine
+    st.session_state.vector_client = vector_client
+
+    st.session_state.PATHWAY_HOST = import_vars.PATHWAY_HOST
+    st.session_state.DEFAULT_PATHWAY_HOST = import_vars.DEFAULT_PATHWAY_HOST
+    
+
 with st.sidebar:
-    if PATHWAY_HOST == DEFAULT_PATHWAY_HOST:
+    if st.session_state.PATHWAY_HOST == st.session_state.DEFAULT_PATHWAY_HOST:
         st.markdown("**Add Your Files**")
 
         st.markdown(htm, unsafe_allow_html=True)
@@ -68,7 +109,7 @@ with st.sidebar:
             """Pathway pipelines ingest documents from [Google Drive](https://drive.google.com/drive/u/0/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs) and [Sharepoint](https://navalgo.sharepoint.com/:f:/s/ConnectorSandbox/EgBe-VQr9h1IuR7VBeXsRfIBuOYhv-8z02_6zf4uTH8WbQ?e=YmlA05) simultaneously. It automatically manages and syncs indexes enabling RAG applications."""
         )
     else:
-        st.markdown(f"**Connected to:** {PATHWAY_HOST}")
+        st.markdown(f"**Connected to:** {st.session_state.PATHWAY_HOST}")
         st.markdown(
             "[View code on GitHub.](https://github.com/pathway-labs/chat-realtime-sharepoint-gdrive)"
         )
@@ -105,43 +146,6 @@ st.markdown(htt, unsafe_allow_html=True)
 
 image_width = 300
 image_height = 200
-
-
-if "messages" not in st.session_state.keys():
-    if "session_id" not in st.session_state.keys():
-        session_id = "uuid-" + str(uuid.uuid4())
-
-        logging.info(json.dumps({"_type": "set_session_id", "session_id": session_id}))
-        Traceloop.set_association_properties({"session_id": session_id})
-        st.session_state["session_id"] = session_id
-
-    headers = _get_websocket_headers()
-    logging.info(
-        json.dumps(
-            {
-                "_type": "set_headers",
-                "headers": headers,
-                "session_id": st.session_state.get("session_id", "NULL_SESS"),
-            }
-        )
-    )
-
-    pathway_explaination = "Pathway is a high-throughput, low-latency data processing framework that handles live data & streaming for you."
-    DEFAULT_MESSAGES = [
-        ChatMessage(role=MessageRole.USER, content="What is Pathway?"),
-        ChatMessage(role=MessageRole.ASSISTANT, content=pathway_explaination),
-    ]
-    chat_engine.chat_history.clear()
-
-    for msg in DEFAULT_MESSAGES:
-        chat_engine.chat_history.append(msg)
-
-    st.session_state.messages = [
-        {"role": msg.role, "content": msg.content} for msg in chat_engine.chat_history
-    ]
-    st.session_state.chat_engine = chat_engine
-    st.session_state.vector_client = vector_client
-
 
 results = get_inputs()
 
