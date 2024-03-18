@@ -21,10 +21,26 @@ PATHWAY_HOST = os.environ.get("PATHWAY_HOST", DEFAULT_PATHWAY_HOST)
 
 PATHWAY_PORT = int(os.environ.get("PATHWAY_PORT", "80"))
 
-vector_client = VectorStoreClient(PATHWAY_HOST, PATHWAY_PORT)
+
+def get_additional_headers():
+    headers = {}
+    key = os.environ.get("PATHWAY_API_KEY")
+    if key is not None:
+        headers = {"X-Pathway-API-Key": key}
+    return headers
+
+
+vector_client = VectorStoreClient(
+    PATHWAY_HOST,
+    PATHWAY_PORT,
+    additional_headers=get_additional_headers(),
+)
 
 
 retriever = PathwayRetriever(host=PATHWAY_HOST, port=PATHWAY_PORT)
+retriever.client = VectorStoreClient(
+    host=PATHWAY_HOST, port=PATHWAY_PORT, additional_headers=get_additional_headers()
+)
 
 llm = OpenAI(model="gpt-3.5-turbo")
 
