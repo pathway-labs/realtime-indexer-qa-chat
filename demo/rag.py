@@ -33,7 +33,7 @@ def get_additional_headers():
 vector_client = VectorStoreClient(
     PATHWAY_HOST,
     PATHWAY_PORT,
-    # additional_headers=get_additional_headers(),
+    additional_headers=get_additional_headers(),
 )
 
 
@@ -41,7 +41,7 @@ retriever = PathwayRetriever(host=PATHWAY_HOST, port=PATHWAY_PORT)
 retriever.client = VectorStoreClient(
     host=PATHWAY_HOST, 
     port=PATHWAY_PORT, 
-    # additional_headers=get_additional_headers()
+    additional_headers=get_additional_headers(),
 )
 
 llm = OpenAI(model="gpt-3.5-turbo")
