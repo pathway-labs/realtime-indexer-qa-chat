@@ -15,7 +15,7 @@ from opentelemetry.sdk.resources import (
     Resource,
 )
 
-PATHWAY_TELEMETRY_ENDPOINT = os.environ.get("PATHWAY_TELEMETRY_SERVER")
+PATHWAY_MONITORING_ENDPOINT = os.environ.get("PATHWAY_MONITORING_SERVER")
 APP_NAME = os.environ.get("APP_NAME")
 PATHWAY_SERVICE_INSTANCE_ID = os.environ.get("PATHWAY_SERVICE_INSTANCE_ID")
 
@@ -33,8 +33,8 @@ resource = Resource(
 
 
 def init_pw_log_config():
-    if PATHWAY_TELEMETRY_ENDPOINT is not None:
-        exporter = OTLPLogExporter(endpoint=PATHWAY_TELEMETRY_ENDPOINT)
+    if PATHWAY_MONITORING_ENDPOINT is not None:
+        exporter = OTLPLogExporter(endpoint=PATHWAY_MONITORING_ENDPOINT)
         logger_provider = LoggerProvider(resource=resource)
         logger_provider.add_log_record_processor(BatchLogRecordProcessor(exporter))
         handler = LoggingHandler(level=logging.NOTSET, logger_provider=logger_provider)
