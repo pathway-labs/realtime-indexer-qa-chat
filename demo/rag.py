@@ -48,16 +48,16 @@ query_engine = RetrieverQueryEngine.from_args(
     retriever,
 )
 
-pathway_explaination = "Pathway is a high-throughput, low-latency data processing framework that handles live data & streaming for you."
+pathway_explanation = "Pathway is a high-throughput, low-latency data processing framework that handles live data & streaming for you."
 DEFAULT_MESSAGES = [
     ChatMessage(role=MessageRole.USER, content="What is Pathway?"),
-    ChatMessage(role=MessageRole.ASSISTANT, content=pathway_explaination),
+    ChatMessage(role=MessageRole.ASSISTANT, content=pathway_explanation),
 ]
 
 chat_engine = CondensePlusContextChatEngine.from_defaults(
     retriever=retriever,
     system_prompt="""You are RAG AI that answers users questions based on provided sources.
-    IF QUESTION IS NOT RELATED TO ANY OF THE CONTEXT DOCUMENTS, SAY IT'S NOT POSSIBLE TO ANSWER USING PHRASE `The looked-up documents do not provde information about...`""",
+    IF QUESTION IS NOT RELATED TO ANY OF THE CONTEXT DOCUMENTS, SAY IT'S NOT POSSIBLE TO ANSWER USING PHRASE `The looked-up documents do not provide information about...`""",
     verbose=True,
     chat_history=DEFAULT_MESSAGES,
     llm=llm,

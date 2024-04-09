@@ -126,10 +126,10 @@ if "messages" not in st.session_state.keys():
         )
     )
 
-    pathway_explaination = "Pathway is a high-throughput, low-latency data processing framework that handles live data & streaming for you."
+    pathway_explanation = "Pathway is a high-throughput, low-latency data processing framework that handles live data & streaming for you."
     DEFAULT_MESSAGES = [
         ChatMessage(role=MessageRole.USER, content="What is Pathway?"),
-        ChatMessage(role=MessageRole.ASSISTANT, content=pathway_explaination),
+        ChatMessage(role=MessageRole.ASSISTANT, content=pathway_explanation),
     ]
     chat_engine.chat_history.clear()
 
