@@ -76,7 +76,7 @@ with st.sidebar:
     st.markdown(
         """**Ready to build your own?**
 
-Our [docs](https://pathway.com/developers/showcases/llamaindex-pathway/) walk through creating custom pipelines with LlamaIndex.
+Our [docs](https://pathway.com/developers/templates/llamaindex-pathway/) walk through creating custom pipelines with LlamaIndex.
 
 **Want a hosted version?**
 
