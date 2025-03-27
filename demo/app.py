@@ -7,7 +7,7 @@ import pandas as pd
 import streamlit as st
 from dotenv import load_dotenv
 from endpoint_utils import get_inputs
-from llama_index.llms.types import ChatMessage, MessageRole
+from llama_index.core.base.llms.types import ChatMessage, MessageRole
 from log_utils import init_pw_log_config
 from rag import DEFAULT_PATHWAY_HOST, PATHWAY_HOST, chat_engine, vector_client
 from streamlit.web.server.websocket_headers import _get_websocket_headers

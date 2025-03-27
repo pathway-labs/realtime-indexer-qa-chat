@@ -1,11 +1,13 @@
 import os
 
 from dotenv import load_dotenv
-from llama_index.chat_engine.condense_plus_context import CondensePlusContextChatEngine
+from llama_index.core.chat_engine.condense_plus_context import (
+    CondensePlusContextChatEngine,
+)
 from llama_index.llms.openai import OpenAI
-from llama_index.llms.types import ChatMessage, MessageRole
-from llama_index.query_engine import RetrieverQueryEngine
-from llama_index.retrievers import PathwayRetriever
+from llama_index.core.base.llms.types import ChatMessage, MessageRole
+from llama_index.core.query_engine import RetrieverQueryEngine
+from llama_index.retrievers.pathway.base import PathwayRetriever
 from traceloop.sdk import Traceloop
 
 from pathway.xpacks.llm.vector_store import VectorStoreClient

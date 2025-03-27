@@ -1,6 +1,8 @@
 pathway==0.8.4
 streamlit==1.31.0
-llama-index==0.9.38
+llama-index==0.12.4
+llama-index-core==0.12.26
+llama-index-retrievers-pathway==0.3.0
 python-dotenv==1.0.1
 traceloop-sdk==0.12.5
 opentelemetry-api>=1.22.0
