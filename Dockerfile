@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY demo/requirements.txt demo/
 
-RUN pip install --pre -U --no-cache-dir -r demo/requirements.txt
+RUN pip install --no-cache-dir -r demo/requirements.txt
 
 COPY . .
 
