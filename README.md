@@ -6,7 +6,7 @@ This repository will show you how to build a RAG App that always has up-to-date 
 
 The setup guide below describes how to build your **App**. You then connect your App to a public **Pathway Vector Store**  sandbox, which is in sync with some public Google Drive and Sharepoint folders. Here, you can upload your own non-confidential files, and try out the App with the sandbox. Finally, we will show you how to quickly spin up your very own Pathway Vector Store which is kept in sync with your own private folders. 
 
-> ℹ To run the full solution (your very own Pathway Vector Store + App) in a single go in production, with your own private folders, we recommend using this complete [🐋 Dockerized setup 🐋](https://github.com/pathwaycom/llm-app/blob/main/examples/pipelines/demo-document-indexing/README.md) directly.
+> ℹ To run the full solution (your very own Pathway Vector Store + App) in a single go in production, with your own private folders, we recommend using this complete [🐋 Dockerized setup 🐋](https://github.com/pathwaycom/llm-app/blob/main/templates/document_indexing/README.md) directly.
 
 ## What is Pathway
 Pathway is an open data processing framework. It allows you to easily develop data transformation pipelines and Machine Learning applications that work with live data sources and changing data. Pathway listens to our documents for changes, additions or removals. It handles loading and indexing without the need for an ETL. Specifically, we will use Pathway hosted offering that makes it particularly easy to launch advanced RAG applications with very little overhead.
@@ -157,9 +157,9 @@ We recommend running in docker when working on a Windows machine.
 
 OK, so far you have managed to get the RAG App and running and it's working - but it still connects to the public demo folders! Let's fix that - we will now show you how to connect your very own folders, in a private deployment. This means you will need to spin up a light web server which provides the "Pathway Vector Store" service, responsible for the whole document ingestion and indexing pipeline.
 
-The code for the Pathway Vector Store pipeline, along with a Dockerfile is provided in the [Pathway LLM examples repository](https://github.com/pathwaycom/llm-app/tree/main/examples/pipelines/demo-document-indexing). Please follow instructions to run only the vector store pipeline, or to run the pipeline and the Streamlit UI as a joint deployment using `docker compose`.
+The code for the Pathway Vector Store pipeline, along with a Dockerfile is provided in the [Pathway LLM examples repository](https://github.com/pathwaycom/llm-app/tree/main/templates/document_indexing). Please follow instructions to run only the vector store pipeline, or to run the pipeline and the Streamlit UI as a joint deployment using `docker compose`.
 
-Note that if you want to create a RAG application connected to your Google Drive, you need to set up a Google Service account, [refer to the instructions here](https://github.com/pathwaycom/llm-app/blob/main/examples/pipelines/demo-question-answering/README.md#create-a-new-project-in-the-google-api-console).
+Note that if you want to create a RAG application connected to your Google Drive, you need to set up a Google Service account, [refer to the instructions here](https://pathway.com/developers/user-guide/connect/connectors/gdrive-connector/#setting-up-google-drive).
 Also, if you are not planning to use local files in your app, you can skip the `binding local volume` part explained in the llm-app instructions linked above. 
 
 ## Summing Up
