@@ -1,48 +1,48 @@
-# Build a chatbot with always updated data sources using Pathway + LlamaIndex + Streamlit
+# Build a chatbot with always updated data sources using the Pathway Live Data Framework + LlamaIndex + Streamlit
 
 ## Create a RAG App without a Vector DB or fragmented ETL pipelines!
 
 This repository will show you how to build a RAG App that always has up-to-date information from your documents and sources stored in Google Drive, Dropbox, Sharepoint and more. 
 
-The setup guide below describes how to build your **App**. You then connect your App to a public **Pathway Vector Store**  sandbox, which is in sync with some public Google Drive and Sharepoint folders. Here, you can upload your own non-confidential files, and try out the App with the sandbox. Finally, we will show you how to quickly spin up your very own Pathway Vector Store which is kept in sync with your own private folders. 
+The setup guide below describes how to build your **App**. You then connect your App to a public **Pathway Live Data Framework Vector Store**  sandbox, which is in sync with some public Google Drive and Sharepoint folders. Here, you can upload your own non-confidential files, and try out the App with the sandbox. Finally, we will show you how to quickly spin up your very own Pathway Live Data Framework Vector Store which is kept in sync with your own private folders. 
 
-> ℹ To run the full solution (your very own Pathway Vector Store + App) in a single go in production, with your own private folders, we recommend using this complete [🐋 Dockerized setup 🐋](https://github.com/pathwaycom/llm-app/blob/main/templates/document_indexing/README.md) directly.
+> ℹ To run the full solution (your very own Pathway Live Data Framework Vector Store + App) in a single go in production, with your own private folders, we recommend using this complete [🐋 Dockerized setup 🐋](https://github.com/pathwaycom/llm-app/blob/main/templates/document_indexing/README.md) directly.
 
-## What is Pathway
-Pathway is an open data processing framework. It allows you to easily develop data transformation pipelines and Machine Learning applications that work with live data sources and changing data. Pathway listens to our documents for changes, additions or removals. It handles loading and indexing without the need for an ETL. Specifically, we will use Pathway hosted offering that makes it particularly easy to launch advanced RAG applications with very little overhead.
+## What is the Pathway Live Data Framework
+The Pathway Live Data Framework is an open data processing framework. It allows you to easily develop data transformation pipelines and Machine Learning applications that work with live data sources and changing data. The Pathway Live Data Framework listens to our documents for changes, additions or removals. It handles loading and indexing without the need for an ETL. Specifically, we will use the Pathway Live Data Framework hosted offering that makes it particularly easy to launch advanced RAG applications with very little overhead.
 
-In this repository, we showcase the integration of LlamaIndex with Pathway's Vector Store solution. You can effortlessly develop advanced chatbots with memory capabilities, providing easy real-time access to your documents. The instructions below are intended as a step-by-step tutorial for learning. 
+In this repository, we showcase the integration of LlamaIndex with the Pathway Live Data Framework's Vector Store solution. You can effortlessly develop advanced chatbots with memory capabilities, providing easy real-time access to your documents. The instructions below are intended as a step-by-step tutorial for learning. 
 
-## Why Pathway?
+## Why the Pathway Live Data Framework?
 
-Pathway is a data processing framework allowing easy building of advanced data processing pipelines. Among others, it offers [Pathway Document Store](https://pathway.com/developers/user-guide/llm-xpack/docs-indexing/), a document indexing solution that is always up to date without the need for traditional ETL pipelines, which are needed in regular VectorDBs. It can monitor several data sources (files, S3 folders, cloud storage) and provide the latest information to your LLM application. 
+The Pathway Live Data Framework is a data processing framework allowing easy building of advanced data processing pipelines. Among others, it offers [Pathway Live Data Framework Document Store](https://pathway.com/developers/user-guide/llm-xpack/docs-indexing/), a document indexing solution that is always up to date without the need for traditional ETL pipelines, which are needed in regular VectorDBs. It can monitor several data sources (files, S3 folders, cloud storage) and provide the latest information to your LLM application. 
 
 This means you do not need to worry about:
 - Checking files to see if there are any changes
 - Parsing PDFs, word documents or other text files
 - Transforming, embedding documents and loading them into a vector database
 
-These are all handled by Pathway.
+These are all handled by the Pathway Live Data Framework.
 
 ## App Overview
 
 This demo combines three technologies.
-* For always up-to-date knowledge and information retrieval from the documents in our folders, **Pathway Vector Store** is used.
+* For always up-to-date knowledge and information retrieval from the documents in our folders, **Pathway Live Data Framework Vector Store** is used.
 * **LlamaIndex** provides search capability to OpenAI LLM and combines functionalities such as chat memory, and OpenAI API calls for the app.
 * Finally, **Streamlit** powers the easy-to-navigate user interface for easy access to the app.
 
-## Tutorial: Creating always up-to-date RAG App with Pathway Vector Store + LlamaIndex
+## Tutorial: Creating always up-to-date RAG App with Pathway Live Data Framework Vector Store + LlamaIndex
 
 ## Prerequisites
 - An OpenAI API Key (Only needed for OpenAI models)
-- Running Pathway Vector Store process (a hosted version is provided for the demo, instructoins to self-host one are provided below)
+- Running Pathway Live Data Framework Vector Store process (a hosted version is provided for the demo, instructoins to self-host one are provided below)
 
 ## Adding new documents
-First, add example documents to the vector store by uploading files to Google Drive that is registered to Pathway Vector Store as a source. Pathway can listen to many sources simultaneously, such as local files, S3 folders, cloud storage and any data stream for data changes. For this demo, a public Google Drive folder is provided for you to upload file. It is pre-populated with Pathway Github repository's readme. In this demo, we will ask questions about Pathway to our assistant and it will respond based on the available files in the Drive folder.
+First, add example documents to the vector store by uploading files to Google Drive that is registered to Pathway Live Data Framework Vector Store as a source. The Pathway Live Data Framework can listen to many sources simultaneously, such as local files, S3 folders, cloud storage and any data stream for data changes. For this demo, a public Google Drive folder is provided for you to upload file. It is pre-populated with Pathway Github repository's readme. In this demo, we will ask questions about Pathway to our assistant and it will respond based on the available files in the Drive folder.
 
 See [pathway-io](https://pathway.com/developers/api-docs/pathway-io) for more information on available connectors and how to implement custom connectors.
 
-## Building Pathway Powered Chat Bot
+## Building a Pathway Live Data Framework Powered Chat Bot
 
 ### Retriever
 First, import the necessary modules for the retriever.
@@ -53,7 +53,7 @@ from llama_index.query_engine import RetrieverQueryEngine
 from llama_index.chat_engine.condense_question import CondenseQuestionChatEngine
 ```
 
-Then, initialize the retriever with the chosen Pathway Vector Store instance (for an easy start we point to the managed instance) and create the query engine:
+Then, initialize the retriever with the chosen Pathway Live Data Framework Vector Store instance (for an easy start we point to the managed instance) and create the query engine:
 
 ```python
 PATHWAY_HOST = "https://demo-document-indexing.pathway.stream"
@@ -136,11 +136,11 @@ The demo is hosted on Streamlit Community Cloud [here](https://chat-realtime-sha
 Clone this repository to your machine.
 Create a `.env` file under the root folder, this will store your OpenAI API key, demo uses the OpenAI GPT model to answer questions.
 
-You need access to a running Pathway Vector Store pipeline. For this demo, a public instance is provided that reads documents in [Google Drive](https://drive.google.com/drive/u/2/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs) and [Sharepoint](https://navalgo.sharepoint.com/:f:/s/ConnectorSandbox/EgBe-VQr9h1IuR7VBeXsRfIBuOYhv-8z02_6zf4uTH8WbQ?e=YmlA05). However, it is easy to run our own locally. Please see the [document store guide](https://pathway.com/developers/templates/docs-indexing) and also [Pathway Deployment](https://pathway.com/developers/user-guide/deployment/docker-deployment). 
+You need access to a running Pathway Live Data Framework Vector Store pipeline. For this demo, a public instance is provided that reads documents in [Google Drive](https://drive.google.com/drive/u/2/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs) and [Sharepoint](https://navalgo.sharepoint.com/:f:/s/ConnectorSandbox/EgBe-VQr9h1IuR7VBeXsRfIBuOYhv-8z02_6zf4uTH8WbQ?e=YmlA05). However, it is easy to run our own locally. Please see the [document store guide](https://pathway.com/developers/templates/docs-indexing) and also [Pathway Deployment](https://pathway.com/developers/user-guide/deployment/docker-deployment). 
 
 Open a terminal and run `streamlit run ui.py`. This will prompt you a URL, simply click and open the demo.
 
-Congrats! Now you are ready to chat with your documents with updated knowledge provided by Pathway.
+Congrats! Now you are ready to chat with your documents with updated knowledge provided by the Pathway Live Data Framework.
 
 ### Running with Docker
 
@@ -153,15 +153,15 @@ docker run -p 8501:8501 realtime_chat
 
 We recommend running in docker when working on a Windows machine.
 
-## 2️⃣ Running a local Pathway Vector Store
+## 2️⃣ Running a local Pathway Live Data Framework Vector Store
 
-OK, so far you have managed to get the RAG App and running and it's working - but it still connects to the public demo folders! Let's fix that - we will now show you how to connect your very own folders, in a private deployment. This means you will need to spin up a light web server which provides the "Pathway Vector Store" service, responsible for the whole document ingestion and indexing pipeline.
+OK, so far you have managed to get the RAG App and running and it's working - but it still connects to the public demo folders! Let's fix that - we will now show you how to connect your very own folders, in a private deployment. This means you will need to spin up a light web server which provides the "Pathway Live Data Framework Vector Store" service, responsible for the whole document ingestion and indexing pipeline.
 
-The code for the Pathway Vector Store pipeline, along with a Dockerfile is provided in the [Pathway LLM examples repository](https://github.com/pathwaycom/llm-app/tree/main/templates/document_indexing). Please follow instructions to run only the vector store pipeline, or to run the pipeline and the Streamlit UI as a joint deployment using `docker compose`.
+The code for the Pathway Live Data Framework Vector Store pipeline, along with a Dockerfile is provided in the [Pathway LLM examples repository](https://github.com/pathwaycom/llm-app/tree/main/templates/document_indexing). Please follow instructions to run only the vector store pipeline, or to run the pipeline and the Streamlit UI as a joint deployment using `docker compose`.
 
 Note that if you want to create a RAG application connected to your Google Drive, you need to set up a Google Service account, [refer to the instructions here](https://pathway.com/developers/user-guide/connect/connectors/gdrive-connector/#setting-up-google-drive).
 Also, if you are not planning to use local files in your app, you can skip the `binding local volume` part explained in the llm-app instructions linked above. 
 
 ## Summing Up
 
-In this tutorial, you learned how to create and deploy a simple yet powerful RAG application with always up-to-date knowledge of your documents, without ETL jobs and buffers to check and read documents for any changes. You also learned how to get started with LlamaIndex using Pathway vector store, and how easy it is to get going with hosted Pathway that handles the majority of hurdles for you.
+In this tutorial, you learned how to create and deploy a simple yet powerful RAG application with always up-to-date knowledge of your documents, without ETL jobs and buffers to check and read documents for any changes. You also learned how to get started with LlamaIndex using the Pathway Live Data Framework Vector Store, and how easy it is to get going with hosted Pathway Live Data Framework that handles the majority of hurdles for you.
