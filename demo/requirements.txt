@@ -1,5 +1,7 @@
 pathway==0.8.4
 streamlit==1.31.0
+# Streamlit 1.31 requires NumPy <2; PyArrow 26 requires NumPy >=2.
+pyarrow<26
 llama-index~=0.13.0
 llama-index-core~=0.13.0
 llama-index-retrievers-pathway~=0.4.0

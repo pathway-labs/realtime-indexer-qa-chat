@@ -6,7 +6,7 @@ This repository will show you how to build a RAG App that always has up-to-date 
 
 The setup guide below describes how to build your **App**. You then connect your App to a public **Pathway Live Data Framework Vector Store**  sandbox, which is in sync with some public Google Drive and Sharepoint folders. Here, you can upload your own non-confidential files, and try out the App with the sandbox. Finally, we will show you how to quickly spin up your very own Pathway Live Data Framework Vector Store which is kept in sync with your own private folders. 
 
-> ℹ To run the full solution (your very own Pathway Live Data Framework Vector Store + App) in a single go in production, with your own private folders, we recommend using this complete [🐋 Dockerized setup 🐋](https://github.com/pathwaycom/llm-app/blob/main/templates/document_indexing/README.md) directly.
+> ℹ To run the full solution (your very own Pathway Live Data Framework Vector Store + App) in a single go in production, with your own private folders, we recommend using this complete [🐋 Dockerized setup 🐋](https://github.com/pathwaycom/pathway/blob/main/examples/llm-app/templates/document_indexing/README.md) directly.
 
 ## What is the Pathway Live Data Framework
 The Pathway Live Data Framework is an open data processing framework. It allows you to easily develop data transformation pipelines and Machine Learning applications that work with live data sources and changing data. The Pathway Live Data Framework listens to our documents for changes, additions or removals. It handles loading and indexing without the need for an ETL. Specifically, we will use the Pathway Live Data Framework hosted offering that makes it particularly easy to launch advanced RAG applications with very little overhead.
@@ -38,7 +38,7 @@ This demo combines three technologies.
 - Running Pathway Live Data Framework Vector Store process (a hosted version is provided for the demo, instructoins to self-host one are provided below)
 
 ## Adding new documents
-First, add example documents to the vector store by uploading files to Google Drive that is registered to Pathway Live Data Framework Vector Store as a source. The Pathway Live Data Framework can listen to many sources simultaneously, such as local files, S3 folders, cloud storage and any data stream for data changes. For this demo, a public Google Drive folder is provided for you to upload file. It is pre-populated with Pathway Github repository's readme. In this demo, we will ask questions about Pathway to our assistant and it will respond based on the available files in the Drive folder.
+First, add example documents to the vector store by uploading files to Google Drive that is registered to Pathway Live Data Framework Vector Store as a source. The Pathway Live Data Framework can listen to many sources simultaneously, such as local files, S3 folders, cloud storage and any data stream for data changes. For this demo, a public Google Drive folder is provided for you to upload file. It is pre-populated with Pathway Live Data Framework Github repository's readme. In this demo, we will ask questions about Pathway Live Data Framework to our assistant and it will respond based on the available files in the Drive folder.
 
 See [pathway-io](https://pathway.com/developers/api-docs/pathway-io) for more information on available connectors and how to implement custom connectors.
 
@@ -69,7 +69,7 @@ query_engine = RetrieverQueryEngine.from_args(
 ### Chat Engine
 We use `CondenseQuestionChatEngine`, one advantage of this chat engine is that, it writes the search query smartly based on the conversation history.
 
-For example, if the user is chatting about `Pathway` and asks a question such as `What are some of the advantages?`, the search query will be based on `Pathway's advantages` making the pipeline more optimized for retrieval. 
+For example, if the user is chatting about `Pathway Live Data Framework` and asks a question such as `What are some of the advantages?`, the search query will be based on `Pathway Live Data Framework's advantages` making the pipeline more optimized for retrieval. 
 
 For further improvements on the pipeline, it is possible to modify chat engine type, prompt and other parameters. For simplicity, let's keep things default.
 
@@ -88,7 +88,7 @@ It is easy to set up and get started with Streamlit UI, making it a good choice 
 First, create a title for the app and initialize the chat engine:
 
 ```python
-st.title("Pathway + LlamaIndex")
+st.title("Pathway Live Data Framework + LlamaIndex")
 
 if "messages" not in st.session_state.keys():
     st.session_state.messages = [
@@ -129,14 +129,14 @@ if st.session_state.messages[-1]["role"] != "assistant":
 
 ### On Streamlit Community Cloud
 
-The demo is hosted on Streamlit Community Cloud [here](https://chat-realtime-sharepoint-gdrive.streamlit.app/). This version of the app uses Pathway's [hosted document pipelines](https://cloud.pathway.com/docindex).
+The demo is hosted on Streamlit Community Cloud [here](https://chat-realtime-sharepoint-gdrive.streamlit.app/). This version of the app uses Pathway Live Data Framework's [hosted document pipelines](https://cloud.pathway.com/docindex).
 
 ### On your local machine
 
 Clone this repository to your machine.
 Create a `.env` file under the root folder, this will store your OpenAI API key, demo uses the OpenAI GPT model to answer questions.
 
-You need access to a running Pathway Live Data Framework Vector Store pipeline. For this demo, a public instance is provided that reads documents in [Google Drive](https://drive.google.com/drive/u/2/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs) and [Sharepoint](https://navalgo.sharepoint.com/:f:/s/ConnectorSandbox/EgBe-VQr9h1IuR7VBeXsRfIBuOYhv-8z02_6zf4uTH8WbQ?e=YmlA05). However, it is easy to run our own locally. Please see the [document store guide](https://pathway.com/developers/templates/docs-indexing) and also [Pathway Deployment](https://pathway.com/developers/user-guide/deployment/docker-deployment). 
+You need access to a running Pathway Live Data Framework Vector Store pipeline. For this demo, a public instance is provided that reads documents in [Google Drive](https://drive.google.com/drive/u/2/folders/1cULDv2OaViJBmOfG5WB0oWcgayNrGtVs) and [Sharepoint](https://navalgo.sharepoint.com/:f:/s/ConnectorSandbox/EgBe-VQr9h1IuR7VBeXsRfIBuOYhv-8z02_6zf4uTH8WbQ?e=YmlA05). However, it is easy to run our own locally. Please see the [document store guide](https://pathway.com/developers/templates/docs-indexing) and also [Pathway Live Data Framework Deployment](https://pathway.com/developers/user-guide/deployment/docker-deployment). 
 
 Open a terminal and run `streamlit run ui.py`. This will prompt you a URL, simply click and open the demo.
 
@@ -157,7 +157,7 @@ We recommend running in docker when working on a Windows machine.
 
 OK, so far you have managed to get the RAG App and running and it's working - but it still connects to the public demo folders! Let's fix that - we will now show you how to connect your very own folders, in a private deployment. This means you will need to spin up a light web server which provides the "Pathway Live Data Framework Vector Store" service, responsible for the whole document ingestion and indexing pipeline.
 
-The code for the Pathway Live Data Framework Vector Store pipeline, along with a Dockerfile is provided in the [Pathway LLM examples repository](https://github.com/pathwaycom/llm-app/tree/main/templates/document_indexing). Please follow instructions to run only the vector store pipeline, or to run the pipeline and the Streamlit UI as a joint deployment using `docker compose`.
+The code for the Pathway Live Data Framework Vector Store pipeline, along with a Dockerfile is provided in the [Pathway Live Data Framework LLM app templates](https://github.com/pathwaycom/pathway/tree/main/examples/llm-app/templates/document_indexing). Please follow instructions to run only the vector store pipeline, or to run the pipeline and the Streamlit UI as a joint deployment using `docker compose`.
 
 Note that if you want to create a RAG application connected to your Google Drive, you need to set up a Google Service account, [refer to the instructions here](https://pathway.com/developers/user-guide/connect/connectors/gdrive-connector/#setting-up-google-drive).
 Also, if you are not planning to use local files in your app, you can skip the `binding local volume` part explained in the llm-app instructions linked above. 
